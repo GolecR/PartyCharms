@@ -1,0 +1,8 @@
+## Interface: 91000
+## Title: Party Charms
+## Author: Ryan Golec
+## Version: 0.0.1
+## SavedVariables: PartyCharmsPlayerIcons, PartyCharmsDebugging
+
+main.lua
+
