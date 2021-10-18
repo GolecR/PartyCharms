@@ -1,14 +1,14 @@
-function PrintDebug(params)
-    if PartyCharmsDebugging then print(params) end
+function PrintDebug(message)
+    if PartyCharmsDebugging then print(message) end
 end
 
 -- Setting up slash commands
-local function PartyCharms_SlashCommands(msg, editbox)
+local function PartyCharms_SlashCommands(message, editbox)
     PrintDebug("PartyCharms::SlashCommand")
 
     -- pattern matching that skips leading whitespace and whitespace between cmd and args
     -- any whitespace at end of args is retained
-    local _, _, cmd, args = string.find(msg, "%s?(%w+)%s?(.*)")
+    local _, _, cmd, args = string.find(message, "%s?(%w+)%s?(.*)")
     local argVals = {}
 
     if args then
@@ -26,8 +26,12 @@ local function PartyCharms_SlashCommands(msg, editbox)
         end
     elseif cmd == "add" then
         PartyCharmsPlayerIcons[argVals[1]] = argVals[2]
+        PartyCharms_OnGroupRosterUpdate(_)
     elseif cmd == "remove" then
         PartyCharmsPlayerIcons[argVals[1]] = nil
+        PartyCharms_OnGroupRosterUpdate(_)
+    elseif cmd == "apply" then
+        PartyCharms_OnGroupRosterUpdate(_)
     elseif cmd == "debug" then
         PartyCharmsDebugging = not PartyCharmsDebugging
         print("Party Charms debug: ", PartyCharmsDebugging)
@@ -80,10 +84,13 @@ function PartyCharms_OnGroupRosterUpdate(event)
 
         -- Checking for group [name,icon]
         for _, player in ipairs(homePlayers) do
-            PrintDebug("PartyCharms::OnGroupRosterUpdate::homePlayers::", player)
+            PrintDebug("PartyCharms::OnGroupRosterUpdate::homePlayers::"..player)
             if PartyCharmsPlayerIcons[player] then
-                PrintDebug("PartyCharms::OnGroupRosterUpdate::homePlayers::Icon", player)
+                PrintDebug("PartyCharms::OnGroupRosterUpdate::homePlayers::IconSet::"..player)
                 SetRaidTarget(player, PartyCharmsPlayerIcons[player])
+            else
+                PrintDebug("PartyCharms::OnGroupRosterUpdate::homePlayers::IconClear::"..player)
+                SetRaidTarget(player, 0)
             end
         end
     end
