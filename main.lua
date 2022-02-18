@@ -35,11 +35,20 @@ local function PartyCharms_SlashCommands(message, editbox)
     elseif cmd == "debug" then
         PartyCharmsDebugging = not PartyCharmsDebugging
         print("Party Charms debug: ", PartyCharmsDebugging)
+    elseif cmd == "enable" then
+        PartyCharmsEnabled = not PartyCharmsEnabled
+        if (PartyCharmsEnabled) then
+            PartyCharms_OnGroupRosterUpdate(_)
+        else
+            PartyCharms_ClearIcons()
+        end
+        print("Party Charms enabled: ", PartyCharmsEnabled)
     else
         print("Party Charms usage:")
         print("/partycharms list : Lists all configured party charms")
         print("/partycharms add <playername> <icon index> : Adds configuration for player icon")
         print("/partycharms remove <playername> : Removes configuration for player icon")
+        print("/partycharms enable : Enables or Disables applying player icons")
     end
 end
 
@@ -60,6 +69,10 @@ f:SetScript("OnEvent", function(self, event, ...)
         if PartyCharmsDebugging == nil then
             PartyCharmsDebugging = false
         end
+
+        if PartyCharmsEnabled == nil then
+            PartyCharmsEnabled = true
+        end
     elseif (event == "GROUP_ROSTER_UPDATE") then
         PartyCharms_OnGroupRosterUpdate(event)
     end
@@ -68,7 +81,7 @@ end)
 function PartyCharms_OnGroupRosterUpdate(event)
     PrintDebug("PartyChamrs::OnGroupRosterUpdate")
     -- Check if just a Party and Leader
-    if (IsInGroup() and UnitIsGroupLeader("player") and GetNumGroupMembers("_HOME") > 1) then
+    if PartyCharmsEnabled and (IsInGroup() and UnitIsGroupLeader("player") and GetNumGroupMembers("_HOME") > 1) then
         PrintDebug("PartyCharms::OnGroupRosterUpdate::SettingIcons")
         -- Checking for self [name,icon]
         local playerLoc = PlayerLocation:CreateFromUnit("player")
@@ -92,6 +105,21 @@ function PartyCharms_OnGroupRosterUpdate(event)
                 PrintDebug("PartyCharms::OnGroupRosterUpdate::homePlayers::IconClear::"..player)
                 SetRaidTarget(player, 0)
             end
+        end
+    end
+end
+
+function PartyCharms_ClearIcons()
+    PrintDebug("PartyCharms::ClearIcons")
+
+    if (IsInGroup() and UnitIsGroupLeader("player") and GetNumGroupMembers("_HOME") > 1) then
+        -- Check for configured [names,icons] and set icons
+        local homePlayers = GetHomePartyInfo()
+
+        -- Checking for group [name,icon]
+        for _, player in ipairs(homePlayers) do
+            PrintDebug("PartyCharms::ClearIcons::homePlayers::IconClear::"..player)
+            SetRaidTarget(player, 0)
         end
     end
 end
