@@ -1,8 +1,10 @@
-## Interface: 91000
+## Interface: 100002
+## X-Min-Interface: 100002
 ## Title: Party Charms
 ## Author: Ryan Golec
 ## Version: 0.0.1
-## SavedVariables: PartyCharmsPlayerIcons, PartyCharmsDebugging, PartyCharmsEnabled
+## SavedVariables: PartyCharmsDB
 
-main.lua
+embeds.xml
 
+Core.lua
