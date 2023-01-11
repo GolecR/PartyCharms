@@ -1,0 +1,9 @@
+v0.1.2
+ - Properly wired up default config options
+ - Added group specific enabled toggles
+ - Config setting now reapplies charms on confg change
+ - Charms reapplied at ready check
+
+v0.1.1
+ 
+ - Ace3 Dragonflight Rewrite

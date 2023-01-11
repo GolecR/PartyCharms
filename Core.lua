@@ -14,45 +14,52 @@ local options = {
             name = "Dungeon Group Settings",
             type = "group",
             args = {
+                enabled = {
+                    name = "Enabled",
+                    order = 1,
+                    type = "toggle",
+                    get = "OptionsTableGetter",
+                    set = "OptionsTableSetter",
+                },
                 healercharm = {
                     name = "Healer Charm",
-                    order = 2,
-                    type = "select",
-                    values = charmsTable,
-                    get = function(info) return PartyCharms.db.profile.dungeon.healercharm end,
-                    set = function(info, input) PartyCharms.db.profile.dungeon.healercharm = input end,
-                },
-                tankcharm = {
-                    name = "Tank Charm",
-                    order = 1,
-                    type = "select",
-                    values = charmsTable,
-                    get = function(info) return PartyCharms.db.profile.dungeon.tankcharm end,
-                    set = function(info, input) PartyCharms.db.profile.dungeon.tankcharm = input end,
-                },
-                dps1charm = {
-                    name = "DPS1 Charm",
                     order = 3,
                     type = "select",
                     values = charmsTable,
-                    get = function(info) return PartyCharms.db.profile.dungeon.dps1charm end,
-                    set = function(info, input) PartyCharms.db.profile.dungeon.dps1charm = input end,
+                    get = "OptionsTableGetter",
+                    set = "OptionsTableSetter",
                 },
-                dps2charm = {
-                    name = "DPS2 Charm",
+                tankcharm = {
+                    name = "Tank Charm",
+                    order = 2,
+                    type = "select",
+                    values = charmsTable,
+                    get = "OptionsTableGetter",
+                    set = "OptionsTableSetter",
+                },
+                dps1charm = {
+                    name = "DPS1 Charm",
                     order = 4,
                     type = "select",
                     values = charmsTable,
-                    get = function(info) return PartyCharms.db.profile.dungeon.dps2charm end,
-                    set = function(info, input) PartyCharms.db.profile.dungeon.dps2charm = input end,
+                    get = "OptionsTableGetter",
+                    set = "OptionsTableSetter",
                 },
-                dps3charm = {
-                    name = "DPS3 Charm",
+                dps2charm = {
+                    name = "DPS2 Charm",
                     order = 5,
                     type = "select",
                     values = charmsTable,
-                    get = function(info) return PartyCharms.db.profile.dungeon.dps3charm end,
-                    set = function(info, input) PartyCharms.db.profile.dungeon.dps3charm = input end,
+                    get = "OptionsTableGetter",
+                    set = "OptionsTableSetter",
+                },
+                dps3charm = {
+                    name = "DPS3 Charm",
+                    order = 6,
+                    type = "select",
+                    values = charmsTable,
+                    get = "OptionsTableGetter",
+                    set = "OptionsTableSetter",
                 },
             }
         },
@@ -60,40 +67,47 @@ local options = {
             name = "Party Group Settings",
             type = "group",
             args = {
-                party1 = {
+                enabled = {
+                    name = "Enabled",
+                    order = 1,
+                    type = "toggle",
+                    get = "OptionsTableGetter",
+                    set = "OptionsTableSetter",
+                },                
+                party1charm = {
                     name = "Party 1 Charm",
                     type = "select",
                     values = charmsTable,
-                    get = function(info) return PartyCharms.db.profile.party.party1charm end,
-                    set = function(info, input) PartyCharms.db.profile.party.party1charm = input end,
+                    get = "OptionsTableGetter",
+                    set = "OptionsTableSetter",
                 },
-                party2 = {
+                party2charm = {
                     name = "Party 2 Charm",
                     type = "select",
                     values = charmsTable,
-                    get = function(info) return PartyCharms.db.profile.party.party2charm end,
-                    set = function(info, input) PartyCharms.db.profile.party.party2charm = input end,
+                    get = "OptionsTableGetter",
+                    set = "OptionsTableSetter",
                 },
-                party3 = {
+                party3charm = {
                     name = "Party 3 Charm",
                     type = "select",
                     values = charmsTable,
-                    get = function(info) return PartyCharms.db.profile.party.party3charm end,
-                    set = function(info, input) PartyCharms.db.profile.party.party3charm = input end,
+                    get = "OptionsTableGetter",
+                    set = "OptionsTableSetter",
                 },
-                party4 = {
+                party4charm = {
                     name = "Party 4 Charm",
                     type = "select",
                     values = charmsTable,
-                    get = function(info) return PartyCharms.db.profile.party.party4charm end,
-                    set = function(info, input) PartyCharms.db.profile.party.party4charm = input end,
+                    get = "OptionsTableGetter",
+                    set = "OptionsTableSetter",
                 },
-                player = {
+                playercharm = {
                     name = "Self Charm",
                     type = "select",
                     values = charmsTable,
-                    get = function(info) return PartyCharms.db.profile.party.selfcharm end,
-                    set = function(info, input) PartyCharms.db.profile.party.selfcharm = input end,
+                    get = "OptionsTableGetter",
+                    set = "OptionsTableSetter",
                 },
             }
         },
@@ -101,26 +115,33 @@ local options = {
             name = "Raid Group Settings",
             type = "group",
             args = {
-                tank1 = {
+                enabled = {
+                    name = "Enabled",
+                    order = 1,
+                    type = "toggle",
+                    get = "OptionsTableGetter",
+                    set = "OptionsTableSetter",
+                },                
+                tank1charm = {
                     name = "Tank 1 Charm",
                     type = "select",
                     values = charmsTable,
-                    get = function(info) return PartyCharms.db.profile.raid.tank1charm end,
-                    set = function(info, input) PartyCharms.db.profile.raid.tank1charm = input end,
+                    get = "OptionsTableGetter",
+                    set = "OptionsTableSetter",
                 },        
-                tank2 = {
+                tank2charm = {
                     name = "Tank 2 Charm",
                     type = "select",
                     values = charmsTable,
-                    get = function(info) return PartyCharms.db.profile.raid.tank2charm end,
-                    set = function(info, input) PartyCharms.db.profile.raid.tank2charm = input end,
+                    get = "OptionsTableGetter",
+                    set = "OptionsTableSetter",
                 },
-                assist = {
+                assistcharm = {
                     name = "Assist 1 Charm",
                     type = "select",
                     values = charmsTable,
-                    get = function(info) return PartyCharms.db.profile.raid.assistcharm end,
-                    set = function(info, input) PartyCharms.db.profile.raid.assistcharm = input end,
+                    get = "OptionsTableGetter",
+                    set = "OptionsTableSetter",
                 },        
             }
         },
@@ -130,17 +151,31 @@ local options = {
 local defaults = {
     profile = {
         party = {
+            enabled = true,
+            party1charm = 1,
+            party2charm = 2,
+            party3charm = 3,
+            party4charm = 4,
+            playercharm = 5,
         },
         dungeon = {
+            enabled = true,
+            healercharm = 1,
+            tankcharm = 2,
+            dps1charm = 3,
+            dps2charm = 4,
+            dps3charm = 5,
         },
         raid = {
-
+            enabled = true,
+            tank1charm = 1,
+            tank2charm = 2,
+            assistcharm = 3,
         },
     }
 }
-
 local function has_value (tab, val)
-    for index, value in ipairs(tab) do  
+    for index, value in ipairs(tab) do
         if value == val then
             return true
         end
@@ -149,41 +184,36 @@ local function has_value (tab, val)
     return false
 end
 
-function PartyCharms:PrintDebug(message)
-    if PartyCharms.db.global.debug then print(message) end
-end
-
-LibStub("AceConfig-3.0"):RegisterOptionsTable("PartyCharms", options, {"pc", "partycharms"})
-
 function PartyCharms:OnInitialize()
     -- SavedVariables DB Setup
     self.db = LibStub("AceDB-3.0"):New("PartyCharmsDB", defaults, true)
+    LibStub("AceConfig-3.0"):RegisterOptionsTable("PartyCharms", options, {"pc", "partycharms"})
 
     -- Event Listeners Setup
     PartyCharms:RegisterEvent("GROUP_ROSTER_UPDATE", "GroupRosterUpdateHandler")
+    PartyCharms:RegisterEvent("READY_CHECK", "GroupRosterUpdateHandler")
 
     -- Blizz Options UI Setup
     LibStub("AceConfigDialog-3.0"):AddToBlizOptions("PartyCharms", "PartyCharms")
-
-    --[[ Trying to get charms to update when the config table has changed
-    -- Config change handler
-    LibStub("AceConfigRegistry-3.0").RegisterCallback(PartyCharms, "ConfigTableChange", "ConfigTableChanged")
-    --]]
 end
 
---[[
-function PartyCharms:ConfigTableChanged(event, appName)
-    PartyCharms:PrintDebug("Table changed")
+function PartyCharms:OptionsTableSetter(info, value)
+    self.db.profile[info[#info-1]][info[#info]] = value
+
+    PartyCharms:GroupRosterUpdateHandler()
 end
---]]
+
+function PartyCharms:OptionsTableGetter(info)
+    return self.db.profile[info[#info-1]][info[#info]]
+end
 
 function PartyCharms:GroupRosterUpdateHandler()
     if UnitIsGroupLeader("player") then
-        if PartyCharms:IsDungeon() then
+        if PartyCharms:IsDungeon() and PartyCharms.db.profile.dungeon.enabled then
             PartyCharms:DungeonRosterUpdateHandler()
-        elseif PartyCharms:IsRaid() then
+        elseif PartyCharms:IsRaid() and PartyCharms.db.profile.raid.enabled then
             PartyCharms:RaidRosterUpdateHandler()
-        else
+        elseif PartyCharms.db.profile.party.enabled then
             PartyCharms:PartyRosterUpdateHandler()
         end
     end
@@ -259,7 +289,7 @@ end
 
 function PartyCharms:PartyRosterUpdateHandler()
     -- Assign Self Charm
-    SetRaidTarget("player", PartyCharms.db.profile.party.selfcharm)
+    SetRaidTarget("player", PartyCharms.db.profile.party.playercharm)
 
     -- Loop through each party member
     for i=1,GetNumGroupMembers("_HOME")-1 do
@@ -267,4 +297,3 @@ function PartyCharms:PartyRosterUpdateHandler()
         SetRaidTarget("party"..i,  PartyCharms.db.profile.party["party"..i.."charm"])
     end
 end
-
