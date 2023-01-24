@@ -213,7 +213,7 @@ function PartyCharms:GroupRosterUpdateHandler()
             PartyCharms:DungeonRosterUpdateHandler()
         elseif PartyCharms:IsRaid() and PartyCharms.db.profile.raid.enabled then
             PartyCharms:RaidRosterUpdateHandler()
-        elseif PartyCharms.db.profile.party.enabled then
+        elseif PartyCharms:IsParty() and PartyCharms.db.profile.party.enabled then
             PartyCharms:PartyRosterUpdateHandler()
         end
     end
@@ -229,6 +229,12 @@ function PartyCharms:IsRaid()
     local _, _, raidDifficultyID = GetInstanceInfo()
 
     return (IsInGroup()  and GetNumGroupMembers("_HOME") > 1 and has_value(raidDifficultyIDs, raidDifficultyID))
+end
+
+function PartyCharms:IsParty()
+    local _, instanceType = GetInstanceInfo()
+
+    return (IsInGroup() and (1 < GetNumGroupMembers("_HOME") <= 5) and instanceType == "none")
 end
 
 function PartyCharms:DungeonRosterUpdateHandler()
