@@ -234,7 +234,7 @@ end
 function PartyCharms:IsParty()
     local _, instanceType = GetInstanceInfo()
 
-    return (IsInGroup() and (1 < GetNumGroupMembers("_HOME") <= 5) and instanceType == "none")
+    return (IsInGroup() and (1 < GetNumGroupMembers("_HOME")) and (GetNumGroupMembers("_HOME") <= 5) and instanceType == "none")
 end
 
 function PartyCharms:DungeonRosterUpdateHandler()
