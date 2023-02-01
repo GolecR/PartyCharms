@@ -1,7 +1,7 @@
 -- AceAddon Setup
 PartyCharms = LibStub("AceAddon-3.0"):NewAddon("PartyCharms", "AceConsole-3.0", "AceEvent-3.0")
 
-local charmsTable = {[1] = "Star", [2] = "Circle", [3] = "Diamond", [4] = "Triangle", [5] = "Moon", [6] = "Square"}
+local charmsTable = { [0] = "None", [1] = "Star", [2] = "Circle", [3] = "Diamond", [4] = "Triangle", [5] = "Moon", [6] = "Square"}
 local raidDifficultyIDs = {3,4,5,6,7,9,14,15,16,17}
 local dungeonDifficultyIDs = {1,2,8,23,24,150}
 
