@@ -1,8 +1,8 @@
-## Interface: 100007
-## X-Min-Interface: 100007
+## Interface: 110002
+## X-Min-Interface: 110002
 ## Title: Party Charms
 ## Author: Ryan Golec
-## Version: 0.1.6
+## Version: 0.1.7
 ## SavedVariables: PartyCharmsDB
 
 embeds.xml

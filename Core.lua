@@ -4,6 +4,7 @@ PartyCharms = LibStub("AceAddon-3.0"):NewAddon("PartyCharms", "AceConsole-3.0", 
 local charmsTable = { [0] = "None", [1] = "Star", [2] = "Circle", [3] = "Diamond", [4] = "Triangle", [5] = "Moon", [6] = "Square"}
 local raidDifficultyIDs = {3,4,5,6,7,9,14,15,16,17}
 local dungeonDifficultyIDs = {1,2,8,23,24,150}
+local delveDifficultyIDs = {208}
 
 local options = {
     name = "PartyCharms",
@@ -56,6 +57,54 @@ local options = {
                 dps3charm = {
                     name = "DPS3 Charm",
                     order = 6,
+                    type = "select",
+                    values = charmsTable,
+                    get = "OptionsTableGetter",
+                    set = "OptionsTableSetter",
+                },
+            }
+        },
+        delve ={
+            name = "Delve Group Settings",
+            type = "group",
+            args = {
+                enabled = {
+                    name = "Enabled",
+                    order = 1,
+                    type = "toggle",
+                    get = "OptionsTableGetter",
+                    set = "OptionsTableSetter",
+                },                
+                delve1charm = {
+                    name = "Delve 1 Charm",
+                    type = "select",
+                    values = charmsTable,
+                    get = "OptionsTableGetter",
+                    set = "OptionsTableSetter",
+                },
+                delve2charm = {
+                    name = "Delve 2 Charm",
+                    type = "select",
+                    values = charmsTable,
+                    get = "OptionsTableGetter",
+                    set = "OptionsTableSetter",
+                },
+                delve3charm = {
+                    name = "Delve 3 Charm",
+                    type = "select",
+                    values = charmsTable,
+                    get = "OptionsTableGetter",
+                    set = "OptionsTableSetter",
+                },
+                delve4charm = {
+                    name = "Delve 4 / Companion Charm",
+                    type = "select",
+                    values = charmsTable,
+                    get = "OptionsTableGetter",
+                    set = "OptionsTableSetter",
+                },
+                playercharm = {
+                    name = "Self Charm",
                     type = "select",
                     values = charmsTable,
                     get = "OptionsTableGetter",
@@ -158,6 +207,14 @@ local defaults = {
             party4charm = 4,
             playercharm = 5,
         },
+        delve = {
+            enabled = true,
+            delve1charm = 1,
+            delve2charm = 2,
+            delve3charm = 3,
+            delve4charm = 4,
+            playercharm = 5,
+        },        
         dungeon = {
             enabled = true,
             healercharm = 1,
@@ -211,6 +268,8 @@ function PartyCharms:GroupRosterUpdateHandler()
     if UnitIsGroupLeader("player") then
         if PartyCharms:IsDungeon() and PartyCharms.db.profile.dungeon.enabled then
             PartyCharms:DungeonRosterUpdateHandler()
+        elseif PartyCharms:IsDelve() and PartyCharms.db.profile.delve.enabled then
+            PartyCharms:DelveRosterUpdateHandler()
         elseif PartyCharms:IsRaid() and PartyCharms.db.profile.raid.enabled then
             PartyCharms:RaidRosterUpdateHandler()
         elseif PartyCharms:IsParty() and PartyCharms.db.profile.party.enabled then
@@ -223,6 +282,12 @@ function PartyCharms:IsDungeon()
     local _, _, dungeonDifficultyID = GetInstanceInfo()
 
     return (IsInGroup()  and GetNumGroupMembers("_HOME") > 1 and has_value(dungeonDifficultyIDs, dungeonDifficultyID))
+end
+
+function PartyCharms:IsDelve()
+    local _, _, delveDifficultyID = GetInstanceInfo()
+
+    return (IsInGroup()  and GetNumGroupMembers("_HOME") > 1 and has_value(delveDifficultyIDs, delveDifficultyID))
 end
 
 function PartyCharms:IsRaid()
@@ -266,6 +331,21 @@ function PartyCharms:DungeonRosterUpdateHandler()
     for i=1,3 do
         if dpsTable[i] then
             SetRaidTarget(dpsTable[i], PartyCharms.db.profile.dungeon["dps"..i.."charm"])
+        end
+    end
+end
+
+function PartyCharms:DelveRosterUpdateHandler()
+    -- Assign Self Charm
+    SetRaidTarget("player", PartyCharms.db.profile.delve.playercharm)
+
+    -- Loop through each party member
+    for i=1,GetNumGroupMembers("_HOME")-1 do
+        -- Assign Charm
+        if (UnitIsPlayer("party"..i)) then
+            SetRaidTarget("party"..i,  PartyCharms.db.profile.delve["delve"..i.."charm"])
+        else
+            SetRaidTarget("party"..i,  PartyCharms.db.profile.delve["delve4charm"])
         end
     end
 end
